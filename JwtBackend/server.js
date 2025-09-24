@@ -1,9 +1,16 @@
 const express = require("express");
 const mongoose=require('mongoose');
+const cookieparser=require('cookie-parser');
+const cors=require('cors');
 require("dotenv").config();
 const app = express();
 const UserRoutes=require('./routes/userRoutes')
 
+app.use(cookieparser());
+app.use(cors({
+  origin:['http://localhost:5173'],
+  credentials:true
+}));
 app.use(express.json());
 app.use('/uni',UserRoutes);
 

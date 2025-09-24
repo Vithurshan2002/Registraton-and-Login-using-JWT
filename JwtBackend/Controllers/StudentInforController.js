@@ -1,5 +1,5 @@
 const userDetailmodel = require("../models/StudentInfor");
-
+const jwt = require("jsonwebtoken");
 //register the student
 exports.UserRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -15,9 +15,10 @@ exports.UserRegister = async (req, res, next) => {
 
         console.log(userdata);
         res.status(200).json({ message: "Successfully Registered." });
-      }
-      else{
-         res.status(400).json({ message: `${email} is alreay Exists.Try another Email to Login` });
+      } else {
+        res.status(400).json({
+          message: `${email} is alreay Exists.Try another Email to Login`,
+        });
       }
     } else {
       res.status(400).json({ message: "Some Informations is not provided" });
@@ -41,6 +42,26 @@ exports.UserLogin = async (req, res, next) => {
       } else {
         const pass = user.password;
         if (pass === password) {
+          const token = jwt.sign({ email: email }, process.env.SECREAT_KEY, {
+            expiresIn: "1m",
+          });
+          const Refreshtoken = jwt.sign(
+            { email: email },
+            process.env.SECREAT_KEY_Refresh,
+            { expiresIn: "5m" }
+          );
+
+          res.cookie("Token", token, {
+            maxAge: 60000,
+            httpOnly: true,
+            secure: true,
+          });
+          res.cookie("RefreshToken", Refreshtoken, {
+            maxAge: 300000,
+            httpOnly: true,
+            secure: true,
+          });
+
           res.status(200).json({ message: "Successfuly LoggedIn" });
         } else {
           res.status(400).json({ message: "Password Invalid" });
@@ -52,4 +73,9 @@ exports.UserLogin = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ message: "Unsuccessffull Loggedin " });
   }
+};
+
+//dashboard
+exports.AccessDashboard = async (req, res, next) => {
+  res.status(200).json({ message:' iam go to dsahoard' });
 };
