@@ -27,7 +27,7 @@ function Login() {
         });
         navigate("/dashboard", { replace: true });
         console.log(user);
-      } catch (error) {
+      } catch (error) {   
         console.log(error.message);
         Swal.fire({
           title: "Sorry!",

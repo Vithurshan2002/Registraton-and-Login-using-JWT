@@ -9,13 +9,11 @@ const Dash = () => {
       const res = await axios.get("http://localhost:4000/uni/dashboard", {
         withCredentials: true,
       });
-      console.log(res);
-      if(res.data.valid){
-          navigate("/dashboard")
+      console.log(res.data);
+      if(!res.data.valid){
+          navigate("/login")
       }
-      else{
-        navigate("/login");
-      }
+      
     } catch (error) {
       console.log(error.message);
     }

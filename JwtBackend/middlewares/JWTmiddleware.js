@@ -24,7 +24,7 @@ const jwt = require("jsonwebtoken");
 
         }
       }
-    );
+    ); 
   } else {
     return res.json({
       valid: false,
@@ -36,7 +36,7 @@ const jwt = require("jsonwebtoken");
 
 exports.varifyuser = (req, res, next) => {
   const accesstoken = req.cookies.Token;
-  if (accesstoken) {
+  if (accesstoken) { 
     jwt.verify(accesstoken, process.env.SECREAT_KEY, (error, decodedata) => {
       if (error) {
         return res.json({ valid: false });

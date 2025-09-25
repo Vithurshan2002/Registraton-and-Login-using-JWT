@@ -77,5 +77,13 @@ exports.UserLogin = async (req, res, next) => {
 
 //dashboard
 exports.AccessDashboard = async (req, res, next) => {
-  res.status(200).json({valid:true, message:' iam go to dsahoard' });
+  try {
+    const user = await userDetailmodel.findOne({ email: req.emailu });
+    if (user) {
+      res.status(200).json({valid:true, message: user });
+    } else {
+      res.status(400).json({valid:false,message: "data not existe" });
+  } }catch(error) {
+     res.status(400).json({valid:false,message: " error" }); 
+}
 };
