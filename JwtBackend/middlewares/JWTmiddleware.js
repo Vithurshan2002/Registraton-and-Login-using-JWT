@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-/* const Renewtoken = (req, res,next) => {
+ const Renewtoken = (req, res,next) => {
   const refreshToken = req.cookies.RefreshToken;
   if (refreshToken) {
     jwt.verify(
@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
       process.env.SECREAT_KEY_Refresh,
       (error, decodedata) => {
         if (error) {
-          return res.json({ success: false });
+          return res.json({ valid:false});
         } else {
           const token = jwt.sign({ email: decodedata.email }, process.env.SECREAT_KEY, {
             expiresIn: "1m",
@@ -32,20 +32,20 @@ const jwt = require("jsonwebtoken");
     });
   }
 };
- */
+ 
 
 exports.varifyuser = (req, res, next) => {
   const accesstoken = req.cookies.Token;
   if (accesstoken) {
     jwt.verify(accesstoken, process.env.SECREAT_KEY, (error, decodedata) => {
       if (error) {
-        return res.json({ success: false });
+        return res.json({ valid: false });
       } else {
         req.emailu = decodedata.email;
         next();
       }
     });
   } else {
-    return res.json({ success: false });
+    Renewtoken(req,res,next);
   }
 };

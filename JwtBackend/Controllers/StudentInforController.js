@@ -77,5 +77,5 @@ exports.UserLogin = async (req, res, next) => {
 
 //dashboard
 exports.AccessDashboard = async (req, res, next) => {
-  res.status(200).json({ message:' iam go to dsahoard' });
+  res.status(200).json({valid:true, message:' iam go to dsahoard' });
 };
