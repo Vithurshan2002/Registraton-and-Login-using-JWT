@@ -22,7 +22,9 @@ const Dash = () => {
     Dashboardapicall();
   }, []);
 
-  return <div>Dash</div>;
+  return <div>
+    <h1>User Details</h1>
+  </div>;
 };
 
 export default Dash;
